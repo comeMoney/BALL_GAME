@@ -1,7 +1,6 @@
+
 <template>
-  <div class='model-wrapper'>
-    首页设计
-  </div>
+  <div class='login-wrapper'>登录</div>
 </template>
 <script>
 export default {
@@ -18,6 +17,7 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-.model-wrapper {
+.login-wrapper {
 }
 </style>
+
