@@ -1,10 +1,11 @@
-
 <template>
-  <div class='login-wrapper'>moneys life show time</div>
+  <div class='header-wrapper'>
+
+  </div>
 </template>
 <script>
 export default {
-  name: '',
+  name: 'DefaultName',
   components: {},
   props: {},
   data() {
@@ -17,7 +18,9 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-.login-wrapper {
+.header-wrapper {
+  border-radius: 8px;
+  height: 200px;
+  background: #ff00ff;
 }
 </style>
-

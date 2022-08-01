@@ -1,12 +1,15 @@
 <template>
   <div class='model-wrapper'>
-    首页设计
+    <Headers />
   </div>
 </template>
 <script>
+import Headers from '../components/Headers.vue'
 export default {
   name: '',
-  components: {},
+  components: {
+    Headers,
+  },
   props: {},
   data() {
     return {}
@@ -19,5 +22,9 @@ export default {
 </script>
 <style lang='less' scoped>
 .model-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  box-sizing: border-box;
 }
 </style>
