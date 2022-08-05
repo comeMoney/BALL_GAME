@@ -1,13 +1,19 @@
 
 <template>
   <div class='login-wrapper'>
-    <div class="login"></div>
+    <back @back="back" />
+    <div class="login-header">
+
+    </div>
   </div>
 </template>
 <script>
+import back from '../components/Back.vue'
 export default {
   name: 'login',
-  components: {},
+  components: {
+    back,
+  },
   props: {},
   data() {
     return {}
@@ -15,11 +21,21 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    back() {
+      this.$router.go(-1)
+    },
+  },
 }
 </script>
 <style lang='less' scoped>
 .login-wrapper {
+  padding: 15px;
+  .login-header {
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff;
+  }
 }
 </style>
 

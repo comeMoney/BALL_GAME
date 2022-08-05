@@ -34,6 +34,11 @@ export default {
   mounted() {
     this.height = window.innerHeight
   },
+  methods: {
+    onClickLeft() {
+      this.$router.go(-1)
+    },
+  },
 }
 </script>
 <style lang="less">
