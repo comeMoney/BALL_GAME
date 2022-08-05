@@ -1,10 +1,12 @@
 
 <template>
-  <div class='login-wrapper'>moneys life show time</div>
+  <div class='login-wrapper'>
+    <div class="login"></div>
+  </div>
 </template>
 <script>
 export default {
-  name: '',
+  name: 'login',
   components: {},
   props: {},
   data() {
