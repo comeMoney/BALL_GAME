@@ -3,7 +3,7 @@
   <div class='login-wrapper'>
     <back @back="back" />
     <div class="login-header">
-
+      
     </div>
   </div>
 </template>
