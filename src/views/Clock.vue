@@ -1,12 +1,13 @@
 <template>
-  <div class='header-wrapper'>
-
+  <div class='click-wrapper'>
+    <map-container></map-container>
   </div>
 </template>
 <script>
+import MapContainer from './MapContainer.vue'
 export default {
   name: 'DefaultName',
-  components: {},
+  components: { MapContainer },
   props: {},
   data() {
     return {}
@@ -18,9 +19,8 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-.header-wrapper {
-  border-radius: 8px;
-  height: 200px;
-  background: #ff00ff;
+.click-wrapper {
+  width: 100%;
+  height: 100%;
 }
 </style>

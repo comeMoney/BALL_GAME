@@ -7,7 +7,9 @@ import 'amfe-flexible'
 import Vant from 'vant';
 import './assets/iconfont/iconfont.css'
 import 'vant/lib/index.css';
+import * as echarts from 'echarts'
 Vue.config.productionTip = false
+Vue.prototype.$echarts = echarts
 Vue.use(Vant);
 new Vue({
   router,

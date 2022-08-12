@@ -35,7 +35,7 @@ export default {
   methods: {
     jumpLogin() {
       this.$router.push({
-        path: '/login'
+        path: '/homepage'
       })
     }
   },
