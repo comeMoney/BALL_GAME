@@ -1,24 +1,31 @@
 <template>
   <div class="home_div">
     <div id="container"></div>
+    <div class="clock-detail">
+
+    </div>
   </div>
 </template>
 <script>
 import AMapLoader from '@amap/amap-jsapi-loader'
-import LabelsData, { GDPSpeed } from './config'
 export default {
   name: 'Mapview',
   data() {
     return {
-      map: null,
-      AMap: null,
-      colors: {},
-      GDPSpeed,
-      LabelsData,
+      clickOption: {
+        startAddress: '',
+        endAddress: '',
+        startLnglat: [],
+        endLnglat: [],
+        startTime: '',
+        endTime: '',
+        timeInterval: '',
+      },
     }
   },
   created() {},
   mounted() {
+    // MapLoader()
     this.initAMap()
   },
   methods: {
@@ -26,7 +33,12 @@ export default {
       AMapLoader.load({
         key: 'c0099cdca68fefeaed57def749729b27', //设置您的key
         version: '2.0',
-        plugins: ['AMap.ToolBar', 'AMap.Scale'],
+        plugins: [
+          'AMap.ToolBar',
+          'AMap.Scale',
+          'AMap.Geolocation',
+          'AMap.Geocoder',
+        ],
         AMapUI: {
           version: '1.1',
           plugins: [],
@@ -36,64 +48,47 @@ export default {
         },
       })
         .then((AMap) => {
-          console.log(this, 'this')
-          var disCountry = new AMap.DistrictLayer.Country({
-            zIndex: 10,
-            SOC: 'CHN',
-            depth: 1,
-            styles: {
-              'nation-stroke': '#ff0000',
-              'coastline-stroke': '#0088ff',
-              'province-stroke': 'grey',
-              fill: (props) => {
-                return this.getColorByDGP(props.adcode_pro)
-              },
-            },
-          })
-
           var map = new AMap.Map('container', {
-            zooms: [4, 10],
-            center: [106.122082, 33.719192],
-            zoom: 5,
-            isHotspot: false,
-            defaultCursor: 'pointer',
-            layers: [disCountry],
-            viewMode: '3D',
+            resizeEnable: true,
+            zoom: 15,
           })
-          map.addControl(new AMap.Scale())
-          map.addControl(new AMap.ToolBar({ liteStyle: true }))
-          map.on('complete', () => {
-            var layer = new AMap.LabelsLayer({
-              // 开启标注避让，默认为开启，v1.4.15 新增属性
-              collision: false,
-              // 开启标注淡入动画，默认为开启，v1.4.15 新增属性
-              animation: true,
+          AMap.plugin('AMap.Geolocation', function () {
+            var geolocation = new AMap.Geolocation({
+              zoom: 15,
+              enableHighAccuracy: true, //是否使用高精度定位，默认:true
+              timeout: 10000, //超过10秒后停止定位，默认：5s
+              position: 'RB', //定位按钮的停靠位置
+              offset: [10, 20], //定位按钮与设置的停靠位置的偏移量，默认：[10, 20]
+              zoomToAccuracy: true, //定位成功后是否自动调整地图视野到定位点
+              showCircle: false,
+              extensions: 'all',
             })
-            for (var i = 0; i < this.LabelsData.length; i++) {
-              var labelsMarker = new AMap.LabelMarker(this.LabelsData[i])
-              layer.add(labelsMarker)
-            }
-            map.add(layer)
+            var geocoder = new AMap.Geocoder({
+              city: '010', //城市设为北京，默认：“全国”
+              radius: 1000, //范围，默认：500
+            })
+            map.addControl(geolocation)
+            geolocation.getCurrentPosition((status, result) => {
+              if (status == 'complete') {
+                const lnglat = [
+                  String(result.position.lng),
+                  String(result.position.lat),
+                ]
+                geocoder.getAddress(lnglat, (statuss, results) => {
+                  if (statuss === 'complete' && results.regeocode) {
+                    var address = results.regeocode.formattedAddress
+                    console.log(address, 'address')
+                  } else {
+                    console.log('根据经纬度查询地址失败')
+                  }
+                })
+              }
+            })
           })
         })
         .catch((e) => {
           console.log(e)
         })
-    },
-    getColorByDGP(adcode) {
-      if (!this.colors[adcode]) {
-        var gdp = this.GDPSpeed[adcode]
-        if (!gdp) {
-          this.colors[adcode] = 'rgb(227,227,227)'
-        } else {
-          var r = 3
-          var g = 140
-          var b = 230
-          var a = gdp / 10
-          this.colors[adcode] = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'
-        }
-      }
-      return this.colors[adcode]
     },
   },
 }
@@ -108,10 +103,8 @@ export default {
 }
 
 #container {
-  padding: 0px;
-  margin: 0px;
   width: 100%;
-  height: 100%;
+  height: 250px;
   position: absolute;
   background: white !important;
 }
