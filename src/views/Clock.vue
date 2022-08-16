@@ -1,5 +1,5 @@
 <template>
-  <div class='click-wrapper'>
+  <div class='click-wrapper' ref="clock">
     <map-container></map-container>
   </div>
 </template>

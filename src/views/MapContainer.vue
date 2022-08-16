@@ -23,8 +23,11 @@ export default {
       },
     }
   },
-  created() {},
+  created() {
+    console.log(new Date(), 'Date');
+  },
   mounted() {
+    console.log(this.$parent, 'parent');
     // MapLoader()
     this.initAMap()
   },
@@ -69,6 +72,7 @@ export default {
             })
             map.addControl(geolocation)
             geolocation.getCurrentPosition((status, result) => {
+              console.log(result, 'result');
               if (status == 'complete') {
                 const lnglat = [
                   String(result.position.lng),
